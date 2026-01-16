@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema(
 
 // ✅ remove next() completely
 
-// ✅ use async-only middleware
+// ✅ use async-only middleware   or remove async and use next()
 // }
 
 
