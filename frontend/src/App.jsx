@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import HomePage from "./pages/HomePage.jsx"
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './store/useUserStore.js'
+import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 
 function App() {
 
-  const {user,checkAuth} = useUserStore();
+  const { user, checkAuth, checkingAuth } = useUserStore();
 
   useEffect(() => {
-		checkAuth();
-	}, [checkAuth]);
+    checkAuth();
+  }, [checkAuth]);
+
+  if (checkingAuth) return <LoadingSpinner />
 
 
   return (
@@ -31,8 +34,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/login' element={user ? <HomePage/> :<LoginPage />} />
+          <Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to="/" />} />
+          <Route path='/login' element={!user ? <LoginPage /> : <Navigate to="/" />} />
         </Routes>
       </div>
       <Toaster />
