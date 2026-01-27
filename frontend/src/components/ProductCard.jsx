@@ -1,12 +1,19 @@
 import { ShoppingCart } from 'lucide-react';
 import React from 'react'
 import toast from 'react-hot-toast'
+import { useUserStore } from '../store/useUserStore';
 
 const ProductCard = ({product}) => {
   console.log(product.image);
+
+  const {user} = useUserStore();
   
   const handleAddToCart = () => {
-    toast.success("Added to cart");
+    if(!user){
+      toast.error("Please login to add items to cart",{id:"login"});
+    }else{
+      // Add to cart functionality
+    }
   }
   return (
     <div className='flex w-full relative flex-col overflow-hidden rounded-lg border border-gray-700 shadow-lg'>
