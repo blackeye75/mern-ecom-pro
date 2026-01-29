@@ -42,6 +42,10 @@ export const getCartProducts = async (req, res) => {
 export const removeAllFromCart = async (req, res) => {
 	try {
 		const { productId } = req.body;
+
+		// console.log(req.body);
+		
+		
 		const user = req.user;
 		if (!productId) {
 			user.cartItems = [];
