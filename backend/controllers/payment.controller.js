@@ -3,6 +3,8 @@ import Order from "../models/order.model.js";
 import { stripe } from "../lib/stripe.js";
 
 export const createCheckoutSession = async (req, res) => {
+	console.log("create session checkout run");
+	
 	try {
 		const { products, couponCode } = req.body;
 
@@ -66,7 +68,7 @@ export const createCheckoutSession = async (req, res) => {
 		if (totalAmount >= 20000) {
 			await createNewCoupon(req.user._id);
 		}
-		res.status(200).json({ id: session.id, totalAmount: totalAmount / 100 });
+		res.status(200).json({ url: session.url, totalAmount: totalAmount / 100 });
 	} catch (error) {
 		console.error("Error processing checkout:", error);
 		res.status(500).json({ message: "Error processing checkout", error: error.message });
